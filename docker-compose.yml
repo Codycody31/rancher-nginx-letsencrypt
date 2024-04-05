@@ -12,13 +12,19 @@ services:
     ports:
       - 80:80
       - 443:443
+    networks:
+      - default
 
   rancher:
     image: rancher/rancher
     container_name: rancher
     restart: unless-stopped
+    privileged: true
     volumes:
-      - rancher-data:/var/lib/rancher
+      - /opt/rancher:/var/lib/rancher
+    networks:
+      - default
 
-volumes:
-  rancher-data:
+networks:
+  default:
+    driver: bridge
